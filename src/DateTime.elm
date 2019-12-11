@@ -22,6 +22,7 @@ This module binds to
 
 import Elm.Kernel.DateTime
 import Maybe exposing (Maybe)
+import Task exposing (Task)
 import Time exposing (Posix)
 
 
@@ -33,7 +34,7 @@ type DateTimeFormat
 
 {-| Create a DateTimeFormat using user locale and timezonerules.
 -}
-localNumericDateTime : DateTimeFormat
+localNumericDateTime : Task x DateTimeFormat
 localNumericDateTime =
     Elm.Kernel.DateTime.localNumericDateTime ()
 

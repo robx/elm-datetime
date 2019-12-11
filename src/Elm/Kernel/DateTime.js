@@ -1,14 +1,21 @@
 /*
 
+import Elm.Kernel.Scheduler exposing (binding, succeed)
+
 */
 
 function _DateTime_localNumericDateTime() {
-	return new Intl.DateTimeFormat(undefined, {
-		year: 'numeric',
-		month: 'numeric',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric'
+	return __Scheduler_binding(function(callback)
+	{
+		callback(__Scheduler_succeed(
+			new Intl.DateTimeFormat(undefined, {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+				hour: 'numeric',
+				minute: 'numeric'
+			})
+		));
 	});
 }
 
