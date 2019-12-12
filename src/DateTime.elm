@@ -32,7 +32,7 @@ type DateTimeFormat
     = DateTimeFormat
 
 
-{-| Create a DateTimeFormat using user locale and timezonerules.
+{-| Create a DateTimeFormat using user locale and timezone.
 -}
 localNumericDateTime : Task x DateTimeFormat
 localNumericDateTime =
