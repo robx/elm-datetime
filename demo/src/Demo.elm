@@ -3,6 +3,7 @@ module Demo exposing (main)
 import Browser
 import DateTime
 import Html
+import Task
 import Time
 
 
@@ -18,17 +19,19 @@ main =
 
 type alias Model =
     { time : Maybe Time.Posix
+    , format : Maybe DateTime.DateTimeFormat
     }
 
 
 type Msg
     = Tick Time.Posix
+    | NewFormat DateTime.DateTimeFormat
 
 
 init : () -> ( Model, Cmd Msg )
 init flags =
-    ( { time = Nothing }
-    , Cmd.none
+    ( { time = Nothing, format = Nothing }
+    , Task.perform NewFormat DateTime.localNumericDateTime
     )
 
 
@@ -38,17 +41,20 @@ update msg model =
         Tick posix ->
             ( { model | time = Just posix }, Cmd.none )
 
+        NewFormat fmt ->
+            ( { model | format = Just fmt }, Cmd.none )
+
 
 view : Model -> Browser.Document Msg
 view model =
-    let
-        format =
-            DateTime.format DateTime.localNumericDateTime
-    in
     { title = "puzzle"
     , body =
-        case model.time of
-            Just posix ->
+        case ( model.time, model.format ) of
+            ( Just posix, Just fmt ) ->
+                let
+                    format =
+                        DateTime.format fmt
+                in
                 [ Html.div [] [ Html.text <| String.fromInt <| Time.posixToMillis <| posix ]
                 , Html.div [] [ Html.text <| format posix ]
                 ]
